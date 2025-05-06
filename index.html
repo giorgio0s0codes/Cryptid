@@ -15,5 +15,32 @@
     <link href="https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap" rel="stylesheet">
 </head>
 <body>
+    <h1>Cryptid</h1>
+    <div class = container>
+        <button id="encryptButton">Crypdit</button>
+        <button id="decryptButton">Decrypdit</button>
+    </div>
+
+<!-- Buttons and ClickEvents for them -->
+    <script>
+        const encryptButton = document.getElementById('encryptButton');
+        const decryptButton = document.getElementById('decryptButton');
+
+        encryptButton.addEventListener('click', async () => {
+            const filePath = await window.electron.openFileDialog();
+            const outputImageFileName = await window.electron.saveFileDialog('encrypted.png');
+            const outputKeyFileName = await window.electron.saveFileDialog('key.txt');
+            await window.electron.encrypt(filePath, outputImageFileName, outputKeyFileName);
+            alert('Encryption Complete');
+        });
+
+        decryptButton.addEventListener('click', async () => {
+            const filePath = await window.electron.openFileDialog();
+            const keyPath = await window.electron.openFileDialog();
+            const outputImageFileName = await window.electron.saveFileDialog('decrypted.png');
+            await window.electron.decrypt(filePath, keyPath, outputImageFileName);
+            alert('Decryption Complete');
+        });
+    </script>
 </body>
 </html>
